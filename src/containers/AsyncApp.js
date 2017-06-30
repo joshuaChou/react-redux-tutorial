@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { selectSubreddit, fetchPostsIfNeeded, invalidateSubreddit } from './actions'
+import { selectSubreddit, fetchPostsIfNeeded, invalidateSubreddit } from './actions/actions'
 import Picker from './component/Picker'
 import Posts from './component/Posts'
 import { withRouter } from 'react-router-dom'

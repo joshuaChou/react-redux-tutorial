@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from './actions'
+import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from './actions/actions'
 import AddTodo from './component/AddTodo'
 import TodoList from './component/TodoList'
 import Footer from './component/Footer'
