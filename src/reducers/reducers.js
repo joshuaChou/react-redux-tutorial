@@ -2,16 +2,14 @@
  * Created by joshua on 17年6月27日.
  */
 import { combineReducers } from 'redux'
-import { ADD_TODO, COMPLETE_TODO, SET_VISIBILITY_FILTER, VisibilityFilters,
-    SELECT_SUBREDDIT, INVALIDATE_SUBREDDIT,
-    REQUEST_POSTS, RECEIVE_POSTS} from './actions'
+import actions from '../actions'
 import { routerReducer} from 'react-router-redux'
-const { SHOW_ALL } = VisibilityFilters
+const { SHOW_ALL } = actions.VisibilityFilters
 
 
 function visibilityFilter(state = SHOW_ALL, action) {
     switch (action.type) {
-        case SET_VISIBILITY_FILTER:
+        case actions.SET_VISIBILITY_FILTER:
             return action.filter
         default:
             return state
@@ -20,7 +18,7 @@ function visibilityFilter(state = SHOW_ALL, action) {
 
 function todos(state = [], action) {
     switch (action.type) {
-        case ADD_TODO:
+        case actions.ADD_TODO:
             return [
                 ...state,
                 {
@@ -28,7 +26,7 @@ function todos(state = [], action) {
                     completed: false
                 }
             ]
-        case COMPLETE_TODO:
+        case actions.COMPLETE_TODO:
             return [
                 ...state.slice(0, action.index),
                 Object.assign({}, state[action.index], {
@@ -43,7 +41,7 @@ function todos(state = [], action) {
 
 function selectedSubreddit(state = 'reactjs', action) {
     switch (action.type) {
-        case SELECT_SUBREDDIT:
+        case actions.SELECT_SUBREDDIT:
             return action.subreddit
         default:
             return state
@@ -56,16 +54,16 @@ function posts(state = {
     items: []
 }, action) {
     switch (action.type) {
-        case INVALIDATE_SUBREDDIT:
+        case actions.INVALIDATE_SUBREDDIT:
             return Object.assign({}, state, {
                 didInvalidate: true
             })
-        case REQUEST_POSTS:
+        case actions.REQUEST_POSTS:
             return Object.assign({}, state, {
                 isFetching: true,
                 didInvalidate: false
             })
-        case RECEIVE_POSTS:
+        case actions.RECEIVE_POSTS:
             return Object.assign({}, state, {
                 isFetching: false,
                 didInvalidate: false,
@@ -79,9 +77,9 @@ function posts(state = {
 
 function postsBySubreddit(state = { }, action) {
     switch (action.type) {
-        case INVALIDATE_SUBREDDIT:
-        case RECEIVE_POSTS:
-        case REQUEST_POSTS:
+        case actions.INVALIDATE_SUBREDDIT:
+        case actions.RECEIVE_POSTS:
+        case actions.REQUEST_POSTS:
             return Object.assign({}, state, {
                 [action.subreddit]: posts(state[action.subreddit], action)
             })

@@ -3,9 +3,9 @@
  */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { selectSubreddit, fetchPostsIfNeeded, invalidateSubreddit } from './actions/actions'
-import Picker from './component/Picker'
-import Posts from './component/Posts'
+import actions from '../actions'
+import Picker from '../component/Picker'
+import Posts from '../component/Posts'
 import { withRouter } from 'react-router-dom'
 import { push } from 'react-router-redux'
 import PropTypes from 'prop-types'
@@ -17,30 +17,31 @@ class AsyncApp extends Component {
         this.handleChange = this.handleChange.bind(this)
         this.handleRefreshClick = this.handleRefreshClick.bind(this)
         this.navigationAbout = this.navigationAbout.bind(this)
+        actions.fetchPostsIfNeeded()
     }
 
     componentDidMount() {
         const { dispatch, selectedSubreddit } = this.props
-        dispatch(fetchPostsIfNeeded(selectedSubreddit))
+        dispatch( actions.fetchPostsIfNeeded(selectedSubreddit))
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.selectedSubreddit !== this.props.selectedSubreddit) {
             const { dispatch, selectedSubreddit } = nextProps
-            dispatch(fetchPostsIfNeeded(selectedSubreddit))
+            dispatch(actions.fetchPostsIfNeeded(selectedSubreddit))
         }
     }
 
     handleChange(nextSubreddit) {
-        this.props.dispatch(selectSubreddit(nextSubreddit))
+        this.props.dispatch(actions.selectSubreddit(nextSubreddit))
     }
 
     handleRefreshClick(e) {
         e.preventDefault()
 
         const { dispatch, selectedSubreddit } = this.props
-        dispatch(invalidateSubreddit(selectedSubreddit))
-        dispatch(fetchPostsIfNeeded(selectedSubreddit))
+        dispatch(actions.invalidateSubreddit(selectedSubreddit))
+        dispatch(actions.fetchPostsIfNeeded(selectedSubreddit))
     }
 
     navigationAbout(e){

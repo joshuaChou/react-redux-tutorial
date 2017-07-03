@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from './actions/actions'
-import AddTodo from './component/AddTodo'
-import TodoList from './component/TodoList'
-import Footer from './component/Footer'
-import logo from './logo.svg';
-import './App.css';
+import actions from '../actions'
+import AddTodo from '../component/AddTodo'
+import TodoList from '../component/TodoList'
+import Footer from '../component/Footer'
+import logo from '../resource/logo.svg';
+import '../resource/App.css';
 import { push } from 'react-router-redux'
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -36,17 +36,17 @@ class App extends Component {
             <div>
                 <AddTodo
                     onAddClick={text =>
-                        dispatch(addTodo(text))
+                        dispatch(actions.addTodo(text))
                     } />
                 <TodoList
                     todos={visibleTodos}
                     onTodoClick={index =>
-                        dispatch(completeTodo(index))
+                        dispatch(actions.completeTodo(index))
                     } />
                 <Footer
                     filter={visibilityFilter}
                     onFilterChange={nextFilter =>
-                        dispatch(setVisibilityFilter(nextFilter))
+                        dispatch(actions.setVisibilityFilter(nextFilter))
                     } />
             </div>
         </div>
@@ -69,11 +69,11 @@ App.propTypes = {
 
 function selectTodos(todos, filter) {
     switch (filter) {
-        case VisibilityFilters.SHOW_ALL:
+        case actions.VisibilityFilters.SHOW_ALL:
             return todos
-        case VisibilityFilters.SHOW_COMPLETED:
+        case actions.VisibilityFilters.SHOW_COMPLETED:
             return todos.filter(todo => todo.completed)
-        case VisibilityFilters.SHOW_ACTIVE:
+        case actions.VisibilityFilters.SHOW_ACTIVE:
             return todos.filter(todo => !todo.completed)
         default:
             return todos
